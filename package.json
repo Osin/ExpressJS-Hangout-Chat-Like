@@ -2,7 +2,7 @@
   "name": "ExpressJS-Hangout-Chat-Like",
   "repository": "git@github.com:Osin/ExpressJS-Hangout-Chat-Like.git",
   "version": "0.0.1",
-  "license":"License MIT",
+  "license": "MIT",
   "author": "Housseini Toumani",
   "email": "osin@live.com",
   "dependencies": {
