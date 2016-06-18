@@ -6,7 +6,8 @@ var express = require('express'),
     io = require('socket.io').listen(server),
     session = require('express-session');
 
-var test = 1;
+var users = [];
+
 app.use('/static', express.static('public'))
     .use(session({
             secret: "I love cat",
@@ -15,28 +16,24 @@ app.use('/static', express.static('public'))
         }
     ))
     .use(function (req, res, next) {
-        var users = req.session.users;
-        if (!users) {
-            users = req.session.users = {}
-        }
         next();
     });
 
 
 // Quand on client se connecte, on le note dans la console
 io.sockets.on('connection', function (socket) {
-        console.log('Un client est connecté !');
-        console.log('session' + session.username);
+    console.log('Un utilisateur est connecté !');
     socket.on('set_username', function (username) {
         session.username = username;
-        });
+        users.push(username);
+        console.log(session.username);
+        console.log(users);
+        socket.emit('message', users);
     });
+});
 
 
 app.get('/', function (req, res) {
-    console.log(req.session);
     res.render('index.twig');
-    test++;
-    console.log(test);
 });
 server.listen(8080);
